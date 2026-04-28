@@ -1,6 +1,8 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
 using ListaDeCompras.ConsoleApp.ModuloCategoria;
 
+namespace ListaDeCompras.ConsoleApp.Utilidades;
+
 public class TelaPrincipal
 {
     private RepositorioCategoria repositorioCategoria = new RepositorioCategoria();
