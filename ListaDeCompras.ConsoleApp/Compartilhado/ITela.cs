@@ -1,6 +1,6 @@
 namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
-public interface ITela // é um conceito totalmente abstrato
+public interface ITela
 {
-    string? ObterOpcaoMenu(); // toda classe que implementa essa interface precisa implementar esse método
+    string? ObterOpcaoMenu();
 }

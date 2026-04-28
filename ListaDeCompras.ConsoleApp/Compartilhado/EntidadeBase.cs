@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 
 namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
-public abstract class EntidadeBase : object // TODA classe no C# herda da Object
+public abstract class EntidadeBase : object // Toda classe no C# herda da object
 {
     public string Id { get; private set; } = string.Empty;
 

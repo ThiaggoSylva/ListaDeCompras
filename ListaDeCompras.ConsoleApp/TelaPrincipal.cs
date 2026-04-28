@@ -1,10 +1,15 @@
-
 using ListaDeCompras.ConsoleApp.Compartilhado;
 using ListaDeCompras.ConsoleApp.ModuloCategoria;
 
-class TelaPrincipal
+public class TelaPrincipal
 {
     private RepositorioCategoria repositorioCategoria = new RepositorioCategoria();
+
+    public TelaPrincipal()
+    {
+        Categoria categoria = new Categoria("Compras do Mês", "Vermelho");
+        repositorioCategoria.Cadastrar(categoria);
+    }
 
     public ITela? ApresentarMenuOpcoesPrincipal()
     {
