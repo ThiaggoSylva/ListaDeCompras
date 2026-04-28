@@ -11,14 +11,14 @@ public abstract class RepositorioBase
         registros.Add(entidade);
     }
 
-    public bool Editar(string idSelecionado, EntidadeBase entidade)
+    public bool Editar(string idSelecionado, EntidadeBase entidadeAtualizada)
     {
-        EntidadeBase? entidadeSelecionada = SelecionarPorId(idSelecionado);
+        EntidadeBase? registroSelecionado = SelecionarPorId(idSelecionado);
 
-        if (entidadeSelecionada == null)
+        if (registroSelecionado == null)
             return false;
 
-        entidadeSelecionada.AtualizarDados(entidade);
+        registroSelecionado.AtualizarDados(entidadeAtualizada);
 
         return true;
     }

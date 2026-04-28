@@ -19,9 +19,11 @@ public class TelaCategoria : TelaBase
 
         if (categorias.Count == 0)
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Não existe nenhum registro.");
+            Console.ResetColor();
             Console.WriteLine("---------------------------------");
-            Console.WriteLine("Digite ENTER para continuar...");
+            Console.Write("Digite ENTER para continuar...");
             Console.ReadLine();
             return;
         }
@@ -55,7 +57,7 @@ public class TelaCategoria : TelaBase
         if (deveExibirCabecalho)
         {
             Console.WriteLine("---------------------------------");
-            Console.WriteLine("Digite ENTER para continuar...");
+            Console.Write("Digite ENTER para continuar...");
             Console.ReadLine();
         }
     }
@@ -65,6 +67,7 @@ public class TelaCategoria : TelaBase
         Console.Write("Digite o nome da categoria: ");
         string nome = Console.ReadLine() ?? string.Empty;
 
+        Console.WriteLine("---------------------------------");
         Console.WriteLine("Selecione uma cor válida para a categoria");
         Console.WriteLine("---------------------------------");
         Console.WriteLine("1 - Vermelho");
