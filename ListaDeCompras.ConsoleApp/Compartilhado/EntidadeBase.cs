@@ -15,5 +15,5 @@ public abstract class EntidadeBase
     }
 
     public abstract string[] Validar();
-    public abstract void AtualizarRegistro(EntidadeBase entidadeAtualizada);
+    public abstract void AtualizarDados(EntidadeBase entidadeAtualizada);
 }
