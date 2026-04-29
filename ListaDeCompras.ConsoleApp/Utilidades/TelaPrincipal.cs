@@ -13,7 +13,7 @@ public class TelaPrincipal
         repositorioCategoria.Cadastrar(categoria);
     }
 
-    public ITela? ApresentarMenuOpcoesPrincipal()
+    public ITelaOpcoes? ApresentarMenuOpcoesPrincipal()
     {
         Console.Clear();
         Console.WriteLine("---------------------------------");
