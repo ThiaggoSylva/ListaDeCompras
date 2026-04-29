@@ -1,4 +1,4 @@
-using System.Collections; // Biblioteca que contém classes de coleções que utilizam herança
+using System.Collections;
 
 namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
@@ -37,7 +37,7 @@ public abstract class RepositorioBase
 
     public EntidadeBase? SelecionarPorId(string idSelecionado)
     {
-        foreach (EntidadeBase registro in registros) // para cada item de uma coleção
+        foreach (EntidadeBase registro in registros)
         {
             if (registro.Id == idSelecionado)
                 return registro;

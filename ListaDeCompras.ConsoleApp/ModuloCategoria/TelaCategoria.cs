@@ -78,7 +78,7 @@ public class TelaCategoria : TelaBase
         Console.Write("Digite a cor da categoria: ");
         string cor = Console.ReadLine() ?? string.Empty;
 
-        string corPorExtenso = string.Empty;
+        string corPorExtenso;
 
         if (cor == "1")
             corPorExtenso = "Vermelho";

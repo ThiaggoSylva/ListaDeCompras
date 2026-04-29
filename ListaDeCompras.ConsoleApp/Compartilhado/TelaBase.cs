@@ -78,10 +78,13 @@ public abstract class TelaBase : ITela
 
         do
         {
-            Console.Write("Digite o ID do registro que deseja editar: ");
-            idSelecionado = Console.ReadLine();
+            Console.Write("Digite o ID do registro que deseja editar (ou S para sair): ");
+            idSelecionado = Console.ReadLine() ?? string.Empty;
 
-            if (!string.IsNullOrWhiteSpace(idSelecionado) && idSelecionado.Length == 7)
+            if (idSelecionado == "S")
+                return;
+
+            if (idSelecionado.Length == 7)
                 break;
         } while (true);
 
@@ -136,10 +139,13 @@ public abstract class TelaBase : ITela
 
         do
         {
-            Console.Write("Digite o ID do registro que deseja excluir: ");
-            idSelecionado = Console.ReadLine();
+            Console.Write("Digite o ID do registro que deseja excluir (ou S para sair): ");
+            idSelecionado = Console.ReadLine() ?? string.Empty;
 
-            if (!string.IsNullOrWhiteSpace(idSelecionado) && idSelecionado.Length == 7)
+            if (idSelecionado.ToUpper() == "S")
+                return;
+
+            if (idSelecionado.Length == 7)
                 break;
         } while (true);
 
@@ -155,6 +161,8 @@ public abstract class TelaBase : ITela
     }
 
     public abstract void VisualizarTodos(bool deveExibirCabecalho);
+
+    protected abstract EntidadeBase ObterDadosCadastrais();
 
     protected void ExibirCabecalho(string titulo)
     {
@@ -174,6 +182,4 @@ public abstract class TelaBase : ITela
         Console.Write("Digite ENTER para continuar...");
         Console.ReadLine();
     }
-
-    protected abstract EntidadeBase ObterDadosCadastrais();
 }
