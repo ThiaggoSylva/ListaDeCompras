@@ -7,7 +7,6 @@ public class TelaCategoria : TelaBase<Categoria>, ITelaOpcoes, ITelaCrud
     public TelaCategoria(RepositorioCategoria repositorio) : base("Categoria", repositorio)
     {
     }
-
     public override void VisualizarTodos(bool deveExibirCabecalho)
     {
         if (deveExibirCabecalho)
@@ -60,7 +59,7 @@ public class TelaCategoria : TelaBase<Categoria>, ITelaOpcoes, ITelaCrud
         }
     }
 
-    protected override Categoria ObterDadosCadastrais()
+    protected override Categoria ObterDados()
     {
         Console.Write("Digite o nome da categoria: ");
         string nome = Console.ReadLine() ?? string.Empty;
@@ -89,4 +88,5 @@ public class TelaCategoria : TelaBase<Categoria>, ITelaOpcoes, ITelaCrud
 
         return new Categoria(nome, corPorExtenso);
     }
+
 }

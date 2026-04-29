@@ -18,24 +18,20 @@ while (true)
         string? opcaoSubMenu = telaSelecionada.ObterOpcaoMenu();
 
         if (opcaoSubMenu == "S")
-        {
-            Console.Clear();
             break;
-        }
 
-        if (telaSelecionada is ITelaCrud telaCrud)
-        {
-            if (opcaoSubMenu == "1")
-                telaCrud.Cadastrar();
+        if (telaSelecionada is TelaBase<EntidadeBase>)
+            continue;
 
-            else if (opcaoSubMenu == "2")
-                telaCrud.Editar();
+        dynamic telaBase = telaSelecionada;
 
-            else if (opcaoSubMenu == "3")
-                telaCrud.Excluir();
-
-            else if (opcaoSubMenu == "4")
-                telaCrud.VisualizarTodos(deveExibirCabecalho: true);
-        }
+        if (opcaoSubMenu == "1")
+            telaBase.Cadastrar();
+        else if (opcaoSubMenu == "2")
+            telaBase.Editar();
+        else if (opcaoSubMenu == "3")
+            telaBase.Excluir();
+        else if (opcaoSubMenu == "4")
+            telaBase.VisualizarTodos(true);
     }
 }

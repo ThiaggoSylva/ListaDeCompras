@@ -1,16 +1,21 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
 using ListaDeCompras.ConsoleApp.ModuloCategoria;
+using ListaDeCompras.ConsoleApp.ModuloProduto;
 
 namespace ListaDeCompras.ConsoleApp.Utilidades;
 
 public class TelaPrincipal
 {
-    private readonly RepositorioCategoria repositorioCategoria = new RepositorioCategoria();
-
+    private RepositorioCategoria repositorioCategoria = new RepositorioCategoria();
+    private RepositorioProduto repositorioProduto = new RepositorioProduto();
+   
     public TelaPrincipal()
     {
         Categoria categoria = new Categoria("Compras do Mês", "Vermelho");
         repositorioCategoria.Cadastrar(categoria);
+
+        Produto produto = new Produto("Arroz", categoria, "kg", 25.90m);
+        repositorioProduto.Cadastrar(produto);
     }
 
     public ITelaOpcoes? ApresentarMenuOpcoesPrincipal()
@@ -26,10 +31,14 @@ public class TelaPrincipal
         Console.WriteLine("S - Sair");
         Console.WriteLine("---------------------------------");
         Console.Write("> ");
+
         string? opcaoMenuPrincipal = Console.ReadLine()?.ToUpper();
 
         if (opcaoMenuPrincipal == "1")
             return new TelaCategoria(repositorioCategoria);
+
+        if (opcaoMenuPrincipal == "2")
+            return (ITelaOpcoes)new TelaProduto(repositorioProduto, repositorioCategoria);
 
         return null;
     }
