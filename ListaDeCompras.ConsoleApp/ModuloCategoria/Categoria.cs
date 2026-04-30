@@ -5,9 +5,9 @@ namespace ListaDeCompras.ConsoleApp.ModuloCategoria;
 public class Categoria : EntidadeBase
 {
     public string Nome { get; private set; }
-    public string Cor { get; private set; }
+    public CorCategoria Cor { get; private set; }
 
-    public Categoria(string nome, string cor)
+    public Categoria(string nome, CorCategoria cor)
     {
         Nome = nome;
         Cor = cor;
@@ -20,11 +20,8 @@ public class Categoria : EntidadeBase
         if (Nome.Length < 2 || Nome.Length > 50)
             erros.Add("O campo \"Nome\" deve conter entre 2 e 50 caracteres.");
 
-        if (string.IsNullOrWhiteSpace(Cor))
-            erros.Add("O campo \"Cor\" deve ser preenchido.");
-
-        else if (Cor != "Vermelho" && Cor != "Azul" && Cor != "Verde" && Cor != "Branco")
-            erros.Add("O campo \"Cor\" deve conter uma seleção permitida (Vermelho, Azul, Verde ou Branco).");
+        else if (!Enum.IsDefined<CorCategoria>(Cor))
+            erros.Add("O campo \"Cor\" deve conter uma seleção permitida (Branco, Vermelho, Verde, ou Azul).");
 
         return erros;
     }
