@@ -18,13 +18,13 @@ public class Categoria : EntidadeBase
         List<string> erros = new List<string>();
 
         if (Nome.Length < 2 || Nome.Length > 50)
-            erros.Add("O campo \"Nome\" deve conter entre 2 e 50 caracteres");
+            erros.Add("O campo \"Nome\" deve conter entre 2 e 50 caracteres.");
 
         if (string.IsNullOrWhiteSpace(Cor))
-            erros.Add("O campo \"Cor\" deve ser preenchido");
+            erros.Add("O campo \"Cor\" deve ser preenchido.");
 
         else if (Cor != "Vermelho" && Cor != "Azul" && Cor != "Verde" && Cor != "Branco")
-            erros.Add("O campo \"Cor\" deve conter uma seleção permitida (Vermelho, Azul, Verde, Branco)");
+            erros.Add("O campo \"Cor\" deve conter uma seleção permitida (Vermelho, Azul, Verde ou Branco).");
 
         return erros;
     }

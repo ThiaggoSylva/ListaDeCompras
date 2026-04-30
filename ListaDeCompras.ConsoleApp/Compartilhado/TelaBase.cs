@@ -133,13 +133,25 @@ public abstract class TelaBase<T> where T : EntidadeBase
                 break;
         } while (true);
 
-        bool conseguiuExcluir = repositorio.Excluir(idSelecionado);
+        T? registroSelecionado = repositorio.SelecionarPorId(idSelecionado);
 
-        if (!conseguiuExcluir)
+        if (registroSelecionado == null)
         {
             Notificador.ExibirMensagem("Não foi possível encontrar o registro requisitado.");
+
+            Excluir();
             return;
         }
+
+        List<string> errosDuplicacao = ValidarExclusaoRegistro(registroSelecionado);
+
+        if (errosDuplicacao.Count > 0)
+        {
+            Notificador.ExibirMensagensErro(errosDuplicacao);
+            return;
+        }
+
+        repositorio.Excluir(registroSelecionado);
 
         Notificador.ExibirMensagem($"O registro \"{idSelecionado}\" foi excluído com sucesso.");
     }
@@ -157,6 +169,11 @@ public abstract class TelaBase<T> where T : EntidadeBase
     }
 
     protected virtual List<string> ValidarRegistroDuplicado(T novaEntidade)
+    {
+        return new List<string>();
+    }
+
+    protected virtual List<string> ValidarExclusaoRegistro(T registro)
     {
         return new List<string>();
     }

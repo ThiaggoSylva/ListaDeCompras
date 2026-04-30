@@ -21,6 +21,11 @@ public abstract class RepositorioBase<T> where T : EntidadeBase // constraint / 
         return true;
     }
 
+    public bool Excluir(T registro)
+    {
+        return registros.Remove(registro);
+    }
+
     public bool Excluir(string idSelecionado)
     {
         T? registroSelecionado = SelecionarPorId(idSelecionado);
