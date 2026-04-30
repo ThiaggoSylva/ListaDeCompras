@@ -100,6 +100,16 @@ public abstract class TelaBase<T> where T : EntidadeBase
             return;
         }
 
+        List<string> errosDuplicacao = ValidarRegistroDuplicado(novaEntidade, idSelecionado);
+
+        if (errosDuplicacao.Count > 0)
+        {
+            Notificador.ExibirMensagensErro(errosDuplicacao);
+
+            Cadastrar();
+            return;
+        }
+
         bool conseguiuEditar = repositorio.Editar(idSelecionado, novaEntidade);
 
         if (!conseguiuEditar)
@@ -168,7 +178,7 @@ public abstract class TelaBase<T> where T : EntidadeBase
         Console.WriteLine("---------------------------------");
     }
 
-    protected virtual List<string> ValidarRegistroDuplicado(T novaEntidade)
+    protected virtual List<string> ValidarRegistroDuplicado(T novaEntidade, string? idIgnorado = null)
     {
         return new List<string>();
     }
