@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
 public abstract class RepositorioBase<T> where T : EntidadeBase // constraint / restrição

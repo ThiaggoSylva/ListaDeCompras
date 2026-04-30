@@ -4,7 +4,7 @@ namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
 public abstract class TelaBase<T> where T : EntidadeBase
 {
-    public string nomeEntidade = string.Empty;
+    protected string nomeEntidade;
     protected RepositorioBase<T> repositorio;
 
     protected TelaBase(string nomeEntidade, RepositorioBase<T> repositorio)
@@ -13,7 +13,7 @@ public abstract class TelaBase<T> where T : EntidadeBase
         this.repositorio = repositorio;
     }
 
-    public virtual string? ObterOpcaoMenu()
+    public string? ObterOpcaoMenu()
     {
         string nomeMinusculo = nomeEntidade.ToLower();
 
@@ -136,8 +136,6 @@ public abstract class TelaBase<T> where T : EntidadeBase
 
     public abstract void VisualizarTodos(bool deveExibirCabecalho);
 
-    protected abstract T ObterDadosCadastrais();
-
     protected void ExibirCabecalho(string titulo)
     {
         Console.Clear();
@@ -147,4 +145,6 @@ public abstract class TelaBase<T> where T : EntidadeBase
         Console.WriteLine(titulo);
         Console.WriteLine("---------------------------------");
     }
+
+    protected abstract T ObterDadosCadastrais();
 }
