@@ -1,3 +1,5 @@
+using ListaDeCompras.ConsoleApp.Utilidades;
+
 namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
 public abstract class TelaBase<T> where T : EntidadeBase
@@ -37,25 +39,11 @@ public abstract class TelaBase<T> where T : EntidadeBase
 
         T novaEntidade = ObterDadosCadastrais();
 
-        string[] erros = novaEntidade.Validar();
+        List<string> erros = novaEntidade.Validar();
 
-        if (erros.Length > 0)
+        if (erros.Count > 0)
         {
-            Console.WriteLine("---------------------------------");
-
-            Console.ForegroundColor = ConsoleColor.Red;
-
-            for (int i = 0; i < erros.Length; i++)
-            {
-                string erro = erros[i];
-
-                Console.WriteLine(erro);
-            }
-
-            Console.ResetColor();
-            Console.WriteLine("---------------------------------");
-            Console.Write("Digite ENTER para continuar...");
-            Console.ReadLine();
+            Notificador.ExibirMensagensErro(erros);
 
             Cadastrar();
             return;
@@ -63,7 +51,7 @@ public abstract class TelaBase<T> where T : EntidadeBase
 
         repositorio.Cadastrar(novaEntidade);
 
-        ExibirMensagem($"O registro \"{novaEntidade.Id}\" foi cadastrado com sucesso!");
+        Notificador.ExibirMensagem($"O registro \"{novaEntidade.Id}\" foi cadastrado com sucesso!");
     }
 
     public void Editar()
@@ -92,25 +80,11 @@ public abstract class TelaBase<T> where T : EntidadeBase
 
         T novaEntidade = ObterDadosCadastrais();
 
-        string[] erros = novaEntidade.Validar();
+        List<string> erros = novaEntidade.Validar();
 
-        if (erros.Length > 0)
+        if (erros.Count > 0)
         {
-            Console.WriteLine("---------------------------------");
-
-            Console.ForegroundColor = ConsoleColor.Red;
-
-            for (int i = 0; i < erros.Length; i++)
-            {
-                string erro = erros[i];
-
-                Console.WriteLine(erro);
-            }
-
-            Console.ResetColor();
-            Console.WriteLine("---------------------------------");
-            Console.Write("Digite ENTER para continuar...");
-            Console.ReadLine();
+            Notificador.ExibirMensagensErro(erros);
 
             Editar();
             return;
@@ -120,11 +94,11 @@ public abstract class TelaBase<T> where T : EntidadeBase
 
         if (!conseguiuEditar)
         {
-            ExibirMensagem("Não foi possível encontrar o registro requisitado.");
+            Notificador.ExibirMensagem("Não foi possível encontrar o registro requisitado.");
             return;
         }
 
-        ExibirMensagem($"O registro \"{idSelecionado}\" foi editado com sucesso.");
+        Notificador.ExibirMensagem($"O registro \"{idSelecionado}\" foi editado com sucesso.");
     }
 
     public void Excluir()
@@ -153,11 +127,11 @@ public abstract class TelaBase<T> where T : EntidadeBase
 
         if (!conseguiuExcluir)
         {
-            ExibirMensagem("Não foi possível encontrar o registro requisitado.");
+            Notificador.ExibirMensagem("Não foi possível encontrar o registro requisitado.");
             return;
         }
 
-        ExibirMensagem($"O registro \"{idSelecionado}\" foi excluído com sucesso.");
+        Notificador.ExibirMensagem($"O registro \"{idSelecionado}\" foi excluído com sucesso.");
     }
 
     public abstract void VisualizarTodos(bool deveExibirCabecalho);
@@ -172,14 +146,5 @@ public abstract class TelaBase<T> where T : EntidadeBase
         Console.WriteLine("---------------------------------");
         Console.WriteLine(titulo);
         Console.WriteLine("---------------------------------");
-    }
-
-    protected void ExibirMensagem(string mensagem)
-    {
-        Console.WriteLine("---------------------------------");
-        Console.WriteLine(mensagem);
-        Console.WriteLine("---------------------------------");
-        Console.Write("Digite ENTER para continuar...");
-        Console.ReadLine();
     }
 }

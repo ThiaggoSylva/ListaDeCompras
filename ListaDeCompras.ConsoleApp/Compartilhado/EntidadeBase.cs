@@ -14,6 +14,6 @@ public abstract class EntidadeBase
                 .Substring(0, 7);
     }
 
-    public abstract string[] Validar();
+    public abstract List<string> Validar();
     public abstract void AtualizarDados(EntidadeBase entidadeAtualizada);
 }
