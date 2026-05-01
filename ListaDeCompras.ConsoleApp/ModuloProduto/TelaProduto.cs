@@ -63,33 +63,34 @@ public class TelaProduto : TelaBase<Produto>
         Console.ReadLine();
     }
 
-    protected override string[] ValidarCadastro(Produto produto)
+    protected override List<string> ValidarRegistroDuplicado(Produto novoProduto, string? idIgnorado = null)
     {
-        List<string> erros = produto.Validar().ToList();
+    List<string> erros = new List<string>();
 
-        if (produto.Categoria != null &&
-            repositorioProduto.ExisteProdutoComMesmoNomeNaCategoria(produto.Nome, produto.Categoria))
+    List<Produto> produtos = repositorioProduto.SelecionarTodos();
+
+    foreach (Produto produto in produtos)
+    {
+        bool mesmoRegistro = produto.Id == idIgnorado;
+
+        bool mesmoNome = produto.Nome.Trim().Equals(
+            novoProduto.Nome.Trim(),
+            StringComparison.OrdinalIgnoreCase
+        );
+
+        bool mesmaCategoria = produto.Categoria.Id == novoProduto.Categoria.Id;
+
+        if (!mesmoRegistro && mesmoNome && mesmaCategoria)
         {
-            erros.Add("Já existe um produto com este nome nesta categoria.");
+            erros.Add($"Já existe um produto com o nome \"{novoProduto.Nome}\" na categoria \"{novoProduto.Categoria.Nome}\".");
+            break;
         }
-
-        return erros.ToArray();
     }
 
-    protected override string[] ValidarEdicao(string idSelecionado, Produto produto)
-    {
-        List<string> erros = produto.Validar().ToList();
-
-        if (produto.Categoria != null &&
-            repositorioProduto.ExisteProdutoComMesmoNomeNaCategoria(produto.Nome, produto.Categoria, idSelecionado))
-        {
-            erros.Add("Já existe um produto com este nome nesta categoria.");
-        }
-
-        return erros.ToArray();
+    return erros;
     }
 
-    private Categoria SelecionarCategoria()
+       private Categoria SelecionarCategoria()
     {
         List<Categoria> categorias = repositorioCategoria.SelecionarTodos();
 
