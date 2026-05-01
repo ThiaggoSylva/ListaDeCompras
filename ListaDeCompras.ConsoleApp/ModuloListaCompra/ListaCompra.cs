@@ -6,6 +6,7 @@ namespace ListaDeCompras.ConsoleApp.ModuloListaCompra;
 public class ListaCompra : EntidadeBase
 {
     public String Nome { get; set; }
+    public List<ItemListaCompra> Itens { get; set; } = new();
     public DateTime DataCriacao { get; private set; }
     public StatusListaCompra Status { get; set; }
     public List<Produto> Produtos { get; private set; }
@@ -20,21 +21,32 @@ public class ListaCompra : EntidadeBase
 
     public int CalcularTotalItens()
     {
-        return Produtos.Count;
+        return Itens.Sum(item => item.Quantidade);
     }
 
-    public decimal CalcularTotalEstimado()
+     public decimal CalcularTotal()
     {
         decimal total = 0;
-        foreach (Produto produto in Produtos)
-            total += produto.PrecoAproximado;
+
+        foreach (var item in Itens)
+            total += item.CalcularTotal();
 
         return total;
     }
-    
-    public bool PossuiItensVinculados()
+
+    public bool PossuiItens()
     {
-        return Produtos.Count > 0;
+        return Itens.Count > 0;
+    }
+
+    public int ObterQuantidadeItens()
+    {
+    return Itens.Count;
+    }
+    
+    public bool ProdutoJaExiste(Produto produto)
+    {
+        return Itens.Any(i => i.Produto.Id == produto.Id);
     }
 
     public override string[] Validar()

@@ -1,5 +1,6 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
 using ListaDeCompras.ConsoleApp.ModuloCategoria;
+using ListaDeCompras.ConsoleApp.Utilidades;
 
 namespace ListaDeCompras.ConsoleApp.ModuloProduto;
 
@@ -90,7 +91,7 @@ public class TelaProduto : TelaBase<Produto>
     return erros;
     }
 
-       private Categoria SelecionarCategoria()
+    private Categoria SelecionarCategoria()
     {
         List<Categoria> categorias = repositorioCategoria.SelecionarTodos();
 
@@ -108,5 +109,22 @@ public class TelaProduto : TelaBase<Produto>
         Categoria? categoriaSelecionada = repositorioCategoria.SelecionarPorId(idCategoria);
 
         return categoriaSelecionada!;
+    }
+    
+    public Produto? SelecionarProduto()
+    {
+    ExibirCabecalho("Seleção de Produtos");
+
+    VisualizarTodos(false);
+
+    Console.Write("Digite o Id do produto: ");
+    string id = Console.ReadLine()!;
+
+    Produto? produto = repositorio.SelecionarPorId(id);
+
+    if (produto == null)
+        Notificador.ExibirMensagem("Produto não encontrado!");
+
+    return produto;
     }
 }
