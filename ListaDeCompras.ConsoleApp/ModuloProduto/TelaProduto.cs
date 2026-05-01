@@ -3,7 +3,7 @@ using ListaDeCompras.ConsoleApp.ModuloCategoria;
 
 namespace ListaDeCompras.ConsoleApp.ModuloProduto;
 
-public class TelaProduto : TelaBase<Produto>, ITelaCrud
+public class TelaProduto : TelaBase<Produto>
 {
     private readonly RepositorioProduto repositorioProduto;
     private readonly RepositorioCategoria repositorioCategoria;
@@ -17,7 +17,7 @@ public class TelaProduto : TelaBase<Produto>, ITelaCrud
         this.repositorioCategoria = repositorioCategoria;
     }
 
-    protected override Produto ObterDados()
+    protected override Produto ObterDadosCadastrais()
     {
         Console.Write("Digite o nome do produto: ");
         string nome = Console.ReadLine() ?? "";

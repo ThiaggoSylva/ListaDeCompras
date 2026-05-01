@@ -7,6 +7,7 @@ public class TelaCategoria : TelaBase<Categoria>, ITelaOpcoes, ITelaCrud
     public TelaCategoria(RepositorioCategoria repositorio) : base("Categoria", repositorio)
     {
     }
+
     public override void VisualizarTodos(bool deveExibirCabecalho)
     {
         if (deveExibirCabecalho)
@@ -32,15 +33,15 @@ public class TelaCategoria : TelaBase<Categoria>, ITelaOpcoes, ITelaCrud
 
         foreach (Categoria c in categorias)
         {
-            string corSelecionada = c.Cor;
+            CorCategoria corSelecionada = c.Cor;
 
-            if (corSelecionada == "Vermelho")
+            if (corSelecionada == CorCategoria.Vermelha)
                 Console.ForegroundColor = ConsoleColor.Red;
 
-            else if (corSelecionada == "Verde")
+            else if (corSelecionada == CorCategoria.Verde)
                 Console.ForegroundColor = ConsoleColor.Green;
 
-            else if (corSelecionada == "Azul")
+            else if (corSelecionada == CorCategoria.Azul)
                 Console.ForegroundColor = ConsoleColor.Blue;
 
             Console.WriteLine(
@@ -59,7 +60,7 @@ public class TelaCategoria : TelaBase<Categoria>, ITelaOpcoes, ITelaCrud
         }
     }
 
-    protected override Categoria ObterDados()
+    protected override Categoria ObterDadosCadastrais()
     {
         Console.Write("Digite o nome da categoria: ");
         string nome = Console.ReadLine() ?? string.Empty;
@@ -67,26 +68,41 @@ public class TelaCategoria : TelaBase<Categoria>, ITelaOpcoes, ITelaCrud
         Console.WriteLine("---------------------------------");
         Console.WriteLine("Selecione uma cor válida para a categoria");
         Console.WriteLine("---------------------------------");
-        Console.WriteLine("1 - Vermelho");
-        Console.WriteLine("2 - Azul");
+        Console.WriteLine("1 - Branca (Padrão)");
+        Console.WriteLine("2 - Vermelha");
         Console.WriteLine("3 - Verde");
-        Console.WriteLine("4 - Branco (Padrão)");
+        Console.WriteLine("4 - Azul");
         Console.WriteLine("---------------------------------");
         Console.Write("Digite a cor da categoria: ");
         string cor = Console.ReadLine() ?? string.Empty;
 
-        string corPorExtenso;
+        CorCategoria corSelecionada = CorCategoria.Branca;
 
-        if (cor == "1")
-            corPorExtenso = "Vermelho";
-        else if (cor == "2")
-            corPorExtenso = "Azul";
+        if (cor == "2")
+            corSelecionada = CorCategoria.Vermelha;
         else if (cor == "3")
-            corPorExtenso = "Verde";
-        else
-            corPorExtenso = "Branco";
+            corSelecionada = CorCategoria.Verde;
+        else if (cor == "4")
+            corSelecionada = CorCategoria.Azul;
 
-        return new Categoria(nome, corPorExtenso);
+        return new Categoria(nome, corSelecionada);
     }
 
+    protected override List<string> ValidarRegistroDuplicado(Categoria novaEntidade, string? idIgnorado = null)
+    {
+        List<string> erros = new List<string>();
+
+        List<Categoria> categorias = repositorio.SelecionarTodos();
+
+        foreach (Categoria c in categorias)
+        {
+            if (c.Id != idIgnorado && c.Nome == novaEntidade.Nome)
+            {
+                erros.Add($"Já existe uma categoria com o nome \"{novaEntidade.Nome}\"");
+                break;
+            }
+        }
+
+        return erros;
+    }
 }

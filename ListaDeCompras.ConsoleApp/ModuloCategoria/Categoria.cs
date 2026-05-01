@@ -1,32 +1,16 @@
-using ListaDeCompras.ConsoleApp.Compartilhado;
-
 namespace ListaDeCompras.ConsoleApp.ModuloCategoria;
+
+using ListaDeCompras.ConsoleApp.Compartilhado;
 
 public class Categoria : EntidadeBase
 {
-    public string Nome { get; private set; }
-    public string Cor { get; private set; }
+    public string Nome { get; set; }
+    public CorCategoria Cor { get; set; }
 
-    public Categoria(string nome, string cor)
+    public Categoria(string nome, CorCategoria cor)
     {
         Nome = nome;
         Cor = cor;
-    }
-
-    public override string[] Validar()
-    {
-        string erros = string.Empty;
-
-        if (Nome.Length == 0 || Nome.Length > 50)
-            erros += "O campo \"Nome\" deve conter entre 0 e 50 caracteres;";
-
-        if (string.IsNullOrWhiteSpace(Cor))
-            erros += "O campo \"Cor\" deve ser preenchido;";
-
-        else if (Cor != "Vermelho" && Cor != "Azul" && Cor != "Verde" && Cor != "Branco")
-            erros += "O campo \"Cor\" deve conter uma seleção permitida (Vermelho, Azul, Verde, Branco);";
-
-        return erros.Split(';', StringSplitOptions.RemoveEmptyEntries);
     }
 
     public override void AtualizarDados(EntidadeBase entidadeAtualizada)
@@ -35,5 +19,18 @@ public class Categoria : EntidadeBase
 
         Nome = categoriaAtualizada.Nome;
         Cor = categoriaAtualizada.Cor;
+    }
+
+    public override string[] Validar()
+    {
+        List<string> erros = new List<string>();
+
+        if (string.IsNullOrWhiteSpace(Nome))
+            erros.Add("O nome da categoria é obrigatório.");
+
+        else if (Nome.Length < 2 || Nome.Length > 100)
+            erros.Add("O nome da categoria deve conter entre 2 e 100 caracteres.");
+
+        return erros.ToArray();
     }
 }

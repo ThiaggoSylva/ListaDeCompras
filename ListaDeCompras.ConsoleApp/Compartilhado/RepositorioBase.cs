@@ -1,6 +1,6 @@
 namespace ListaDeCompras.ConsoleApp.Compartilhado;
 
-public abstract class RepositorioBase<T> where T : EntidadeBase
+public abstract class RepositorioBase<T> where T : EntidadeBase // constraint / restrição
 {
     protected List<T> registros = new List<T>();
 
@@ -19,6 +19,11 @@ public abstract class RepositorioBase<T> where T : EntidadeBase
         registroSelecionado.AtualizarDados(entidadeAtualizada);
 
         return true;
+    }
+
+    public bool Excluir(T registro)
+    {
+        return registros.Remove(registro);
     }
 
     public bool Excluir(string idSelecionado)
