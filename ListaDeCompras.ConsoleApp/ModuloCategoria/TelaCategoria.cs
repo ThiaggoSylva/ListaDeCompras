@@ -1,12 +1,19 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
+using ListaDeCompras.ConsoleApp.ModuloProduto;
 using ListaDeCompras.ConsoleApp.Utilidades;
 
 namespace ListaDeCompras.ConsoleApp.ModuloCategoria;
 
 public class TelaCategoria : TelaBase<Categoria>, ITelaOpcoes, ITelaCrud
 {
-    public TelaCategoria(RepositorioCategoria repositorio) : base("Categoria", repositorio)
+    private readonly RepositorioProduto repositorioProduto;
+
+    public TelaCategoria(
+        RepositorioCategoria repositorioCategoria,
+        RepositorioProduto repositorioProduto
+    ) : base("Categoria", repositorioCategoria)
     {
+        this.repositorioProduto = repositorioProduto;
     }
 
     public override void VisualizarTodos(bool deveExibirCabecalho)
@@ -95,6 +102,24 @@ public class TelaCategoria : TelaBase<Categoria>, ITelaOpcoes, ITelaCrud
             if (c.Id != idIgnorado && c.Nome == novaEntidade.Nome)
             {
                 erros.Add($"Já existe uma categoria com o nome \"{novaEntidade.Nome}\"");
+                break;
+            }
+        }
+
+        return erros;
+    }
+
+    protected override List<string> ValidarExclusaoRegistro(Categoria registro)
+    {
+        List<string> erros = new List<string>();
+
+        List<Produto> produtos = repositorioProduto.SelecionarTodos();
+
+        foreach (Produto p in produtos)
+        {
+            if (p.Categoria == registro)
+            {
+                erros.Add("Não é possível excluir uma categoria com produtos cadastrados.");
                 break;
             }
         }
