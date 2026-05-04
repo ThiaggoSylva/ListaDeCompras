@@ -1,4 +1,5 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
+using ListaDeCompras.ConsoleApp.ModuloProduto;
 
 namespace ListaDeCompras.ConsoleApp.ModuloListaCompras;
 
@@ -7,6 +8,7 @@ public class ListaCompras : EntidadeBase
     public string Nome { get; private set; }
     public DateTime DataCriacao { get; private set; }
     public StatusListaCompras Status { get; private set; }
+    public List<ItemListaCompras> Itens { get; private set; } = new List<ItemListaCompras>();
 
     public ListaCompras(string nome)
     {
@@ -24,6 +26,27 @@ public class ListaCompras : EntidadeBase
     public void Concluir()
     {
         Status = StatusListaCompras.Concluida;
+    }
+
+    public void AdicionarItem(Produto produto, int quantidade)
+    {
+        ItemListaCompras item = new ItemListaCompras(produto, quantidade);
+
+        Itens.Add(item);
+    }
+
+    public bool RemoverItem(string idItem)
+    {
+        foreach (ItemListaCompras item in Itens)
+        {
+            if (item.Id == idItem)
+            {
+                Itens.Remove(item);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public override List<string> Validar()
