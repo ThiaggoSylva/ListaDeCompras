@@ -10,6 +10,7 @@
   <ItemGroup>
     <Folder Include="Compartilhado\" />
     <Folder Include="ModuloCategoria\" />
+    <Folder Include="ModuloProduto\" />
   </ItemGroup>
 
 </Project>

@@ -1,16 +1,21 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
 using ListaDeCompras.ConsoleApp.ModuloCategoria;
+using ListaDeCompras.ConsoleApp.ModuloProduto;
 
 namespace ListaDeCompras.ConsoleApp.Utilidades;
 
 public class TelaPrincipal
 {
     private readonly RepositorioCategoria repositorioCategoria = new RepositorioCategoria();
+    private readonly RepositorioProduto repositorioProduto = new RepositorioProduto();
 
     public TelaPrincipal()
     {
-        Categoria categoria = new Categoria("Compras do Mês", CorCategoria.Vermelha);
+        Categoria categoria = new Categoria("Café", CorCategoria.Vermelha);
         repositorioCategoria.Cadastrar(categoria);
+
+        Produto produto = new Produto("Nescafé Tradicional", "140 g", 24.00m, categoria);
+        repositorioProduto.Cadastrar(produto);
     }
 
     public ITelaOpcoes? ApresentarMenuOpcoesPrincipal()
@@ -30,6 +35,9 @@ public class TelaPrincipal
 
         if (opcaoMenuPrincipal == "1")
             return new TelaCategoria(repositorioCategoria);
+
+        if (opcaoMenuPrincipal == "2")
+            return new TelaProduto(repositorioProduto, repositorioCategoria);
 
         return null;
     }
