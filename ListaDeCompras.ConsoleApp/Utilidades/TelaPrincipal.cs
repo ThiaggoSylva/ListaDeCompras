@@ -20,6 +20,7 @@ public class TelaPrincipal
         repositorioProduto.Cadastrar(produto);
 
         ListaCompras listaCompras = new ListaCompras("Compras do mês");
+        listaCompras.AdicionarItem(produto, 2);
         repositorioListaCompras.Cadastrar(listaCompras);
     }
 

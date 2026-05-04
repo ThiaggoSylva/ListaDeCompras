@@ -1,5 +1,6 @@
 using ListaDeCompras.ConsoleApp.Compartilhado;
 using ListaDeCompras.ConsoleApp.ModuloCategoria;
+using ListaDeCompras.ConsoleApp.Utilidades;
 
 namespace ListaDeCompras.ConsoleApp.ModuloProduto;
 
@@ -21,6 +22,12 @@ public class TelaProduto : TelaBase<Produto>, ITelaOpcoes, ITelaCrud
             ExibirCabecalho("Visualização de Produtos");
 
         List<Produto> produtos = repositorio.SelecionarTodos();
+
+        if (produtos.Count == 0)
+        {
+            Notificador.ExibirMensagem("Nenhum item registrado.");
+            return;
+        }
 
         Console.WriteLine(
             "{0, -7} | {1, -30} | {2, -15} | {3, -20} | {4, -15}",
@@ -78,12 +85,7 @@ public class TelaProduto : TelaBase<Produto>, ITelaOpcoes, ITelaCrud
 
         if (categorias.Count == 0)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Não existe nenhum registro.");
-            Console.ResetColor();
-            Console.WriteLine("---------------------------------");
-            Console.Write("Digite ENTER para continuar...");
-            Console.ReadLine();
+            Notificador.ExibirMensagem("Nenhuma categoria registrada.");
             return;
         }
 
