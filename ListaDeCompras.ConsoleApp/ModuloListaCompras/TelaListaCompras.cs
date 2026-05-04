@@ -230,6 +230,16 @@ public class TelaListaCompras : TelaBase<ListaCompras>, ITelaOpcoes, ITelaCrud
         return new ListaCompras(nome);
     }
 
+    protected override List<string> ValidarExclusaoRegistro(ListaCompras registro)
+    {
+        List<string> erros = new List<string>();
+
+        if (registro.Itens.Count > 0)
+            erros.Add("Não é possível excluir uma lista de compras com itens cadastrados.");
+
+        return erros;
+    }
+
     private void VisualizarProdutos()
     {
         List<Produto> produtos = repositorioProduto.SelecionarTodos();
