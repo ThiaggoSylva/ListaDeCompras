@@ -44,7 +44,7 @@ public class TelaPrincipal
             return new TelaProduto(repositorioProduto, repositorioCategoria);
 
         if (opcaoMenuPrincipal == "3")
-            return new TelaListaCompras(repositorioListaCompras);
+            return new TelaListaCompras(repositorioListaCompras, repositorioProduto);
 
         return null;
     }

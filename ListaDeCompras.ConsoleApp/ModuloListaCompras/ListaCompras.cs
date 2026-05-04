@@ -9,6 +9,18 @@ public class ListaCompras : EntidadeBase
     public DateTime DataCriacao { get; private set; }
     public StatusListaCompras Status { get; private set; }
     public List<ItemListaCompras> Itens { get; private set; } = new List<ItemListaCompras>();
+    public decimal TotalGasto
+    {
+        get
+        {
+            decimal totalGasto = 0;
+
+            foreach (ItemListaCompras item in Itens)
+                totalGasto += item.Preco;
+
+            return totalGasto;
+        }
+    }
 
     public ListaCompras(string nome)
     {
