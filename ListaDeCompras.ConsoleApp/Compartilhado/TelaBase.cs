@@ -13,7 +13,7 @@ public abstract class TelaBase<T> where T : EntidadeBase
         this.repositorio = repositorio;
     }
 
-    public string? ObterOpcaoMenu()
+    public virtual string? ObterOpcaoMenu()
     {
         string nomeMinusculo = nomeEntidade.ToLower();
 
