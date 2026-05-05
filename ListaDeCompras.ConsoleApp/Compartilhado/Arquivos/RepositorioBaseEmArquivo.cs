@@ -1,57 +1,18 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using ListaDeCompras.ConsoleApp.ModuloCategoria;
-using ListaDeCompras.ConsoleApp.ModuloListaCompras;
-using ListaDeCompras.ConsoleApp.ModuloProduto;
-
 namespace ListaDeCompras.ConsoleApp.Compartilhado.Arquivos;
 
-class ContextoJson
+public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase
 {
-    public List<Categoria> Categorias { get; set; } = new List<Categoria>();
-    public List<Produto> Produtos { get; set; } = new List<Produto>();
-    public List<ListaCompras> ListaCompras { get; set; } = new List<ListaCompras>();
+    protected ContextoJson contexto;
+    protected List<T> registros;
 
-    public void Salvar()
+    public RepositorioBaseEmArquivo(ContextoJson contexto)
     {
-        string caminhoDiretorio = "C:\\Users\\User\\Downloads";
+        this.contexto = contexto;
 
-        string caminhoArquivo = caminhoDiretorio + "\\dados.json";
-
-        JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
-        opcoesJson.WriteIndented = true;
-        opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
-
-        string jsonString = JsonSerializer.Serialize(this, opcoesJson);
-
-        File.WriteAllText(caminhoArquivo, jsonString);
+        this.registros = CarregarRegistros();
     }
 
-    public void Carregar()
-    {
-        string caminhoDiretorio = "C:\\Users\\User\\Downloads";
-
-        string caminhoArquivo = caminhoDiretorio + "\\dados.json";
-
-        string jsonString = File.ReadAllText(caminhoArquivo);
-
-        JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
-        opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
-
-        ContextoJson? contextoSalvo = JsonSerializer.Deserialize<ContextoJson>(jsonString, opcoesJson);
-
-        if (contextoSalvo == null)
-            return;
-
-        this.Categorias = contextoSalvo.Categorias;
-        this.Produtos = contextoSalvo.Produtos;
-        this.ListaCompras = contextoSalvo.ListaCompras;
-    }
-}
-
-public class RepositorioBaseEmArquivo<T> where T : EntidadeBase
-{
-    protected List<T> registros = new List<T>();
+    protected abstract List<T> CarregarRegistros();
 
     public void Cadastrar(T entidade)
     {
