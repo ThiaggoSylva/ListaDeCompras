@@ -8,11 +8,19 @@ using ListaDeCompras.ConsoleApp.Utilidades;
 ContextoJson contexto = new ContextoJson();
 contexto.Carregar();
 
+// RepositorioCategoriaEmMemoria repositorioCategoria = new RepositorioCategoriaEmMemoria();
+// RepositorioProdutoEmMemoria repositorioProduto = new RepositorioProdutoEmMemoria();
+// RepositorioListaComprasEmMemoria repositorioListaCompras = new RepositorioListaComprasEmMemoria();
+
 RepositorioCategoriaEmArquivo repositorioCategoria = new RepositorioCategoriaEmArquivo(contexto);
 RepositorioProdutoEmArquivo repositorioProduto = new RepositorioProdutoEmArquivo(contexto);
 RepositorioListaComprasEmArquivo repositorioListaCompras = new RepositorioListaComprasEmArquivo(contexto);
 
-TelaPrincipal telaPrincipal = new TelaPrincipal();
+TelaPrincipal telaPrincipal = new TelaPrincipal(
+    repositorioCategoria,
+    repositorioProduto,
+    repositorioListaCompras
+);
 
 while (true)
 {

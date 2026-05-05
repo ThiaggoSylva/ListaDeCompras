@@ -17,6 +17,8 @@ public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase
     public void Cadastrar(T entidade)
     {
         registros.Add(entidade);
+
+        contexto.Salvar();
     }
 
     public bool Editar(string idSelecionado, T entidadeAtualizada)
@@ -28,12 +30,19 @@ public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase
 
         registroSelecionado.AtualizarDados(entidadeAtualizada);
 
+        contexto.Salvar();
+
         return true;
     }
 
     public bool Excluir(T registro)
     {
-        return registros.Remove(registro);
+        bool conseguiuExcluir = registros.Remove(registro);
+
+        if (conseguiuExcluir)
+            contexto.Salvar();
+
+        return conseguiuExcluir;
     }
 
     public bool Excluir(string idSelecionado)
@@ -43,9 +52,7 @@ public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase
         if (registroSelecionado == null)
             return false;
 
-        registros.Remove(registroSelecionado);
-
-        return true;
+        return Excluir(registroSelecionado);
     }
 
     public T? SelecionarPorId(string idSelecionado)

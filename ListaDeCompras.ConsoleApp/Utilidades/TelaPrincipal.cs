@@ -7,12 +7,19 @@ namespace ListaDeCompras.ConsoleApp.Utilidades;
 
 public class TelaPrincipal
 {
-    private readonly RepositorioCategoriaEmMemoria repositorioCategoria = new RepositorioCategoriaEmMemoria();
-    private readonly RepositorioProdutoEmMemoria repositorioProduto = new RepositorioProdutoEmMemoria();
-    private readonly RepositorioListaComprasEmMemoria repositorioListaCompras = new RepositorioListaComprasEmMemoria();
+    private readonly RepositorioCategoriaEmArquivo repositorioCategoria;
+    private readonly RepositorioProdutoEmArquivo repositorioProduto;
+    private readonly RepositorioListaComprasEmArquivo repositorioListaCompras;
 
-    public TelaPrincipal()
+    public TelaPrincipal(
+        RepositorioCategoriaEmArquivo repositorioCategoria,
+        RepositorioProdutoEmArquivo repositorioProduto,
+        RepositorioListaComprasEmArquivo repositorioListaCompras
+    )
     {
+        this.repositorioCategoria = repositorioCategoria;
+        this.repositorioProduto = repositorioProduto;
+        this.repositorioListaCompras = repositorioListaCompras;
     }
 
     public ITelaOpcoes? ApresentarMenuOpcoesPrincipal()
