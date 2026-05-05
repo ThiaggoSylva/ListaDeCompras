@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Compartilhado\Arquivos\" />
     <Folder Include="ModuloCategoria\" />
     <Folder Include="ModuloListaCompras\" />
     <Folder Include="ModuloProduto\" />

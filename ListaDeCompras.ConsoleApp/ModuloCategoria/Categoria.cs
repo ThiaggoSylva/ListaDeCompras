@@ -4,8 +4,12 @@ namespace ListaDeCompras.ConsoleApp.ModuloCategoria;
 
 public class Categoria : EntidadeBase
 {
-    public string Nome { get; private set; }
-    public CorCategoria Cor { get; private set; }
+    public string Nome { get; set; }
+    public CorCategoria Cor { get; set; }
+
+    public Categoria()
+    {
+    }
 
     public Categoria(string nome, CorCategoria cor)
     {
