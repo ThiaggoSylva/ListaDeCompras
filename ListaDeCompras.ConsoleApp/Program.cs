@@ -14,7 +14,7 @@ try
 }
 catch (JsonException)
 {
-    Notificador.ExibirMensagem("O arquivo de armazenamento está corrompido. Contate a administração");
+    Notificador.ExibirMensagem("O arquivo de armazenamento está corrompido! Contate o suporte.");
     return;
 }
 
