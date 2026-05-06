@@ -12,12 +12,21 @@ public class ContextoJson
     public List<Produto> Produtos { get; set; } = new List<Produto>();
     public List<ListaCompras> ListaCompras { get; set; } = new List<ListaCompras>();
 
+    private readonly string caminhoArquivo;
+
+    public ContextoJson()
+    {
+        string caminhoAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+        string caminhoDiretorio = Path.Combine(caminhoAppData, "ListaDeCompras");
+
+        Directory.CreateDirectory(caminhoDiretorio);
+
+        caminhoArquivo = Path.Combine(caminhoDiretorio, "dados.json");
+    }
+
     public void Salvar()
     {
-        string caminhoDiretorio = "C:\\Users\\User\\Downloads";
-
-        string caminhoArquivo = caminhoDiretorio + "\\dados.json";
-
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
         opcoesJson.WriteIndented = true;
         opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -30,9 +39,8 @@ public class ContextoJson
 
     public void Carregar()
     {
-        string caminhoDiretorio = "C:\\Users\\User\\Downloads";
-
-        string caminhoArquivo = caminhoDiretorio + "\\dados.json";
+        if (!File.Exists(caminhoArquivo))
+            return;
 
         string jsonString = File.ReadAllText(caminhoArquivo);
 
