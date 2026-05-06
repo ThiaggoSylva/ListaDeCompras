@@ -8,13 +8,9 @@ using ListaDeCompras.ConsoleApp.Utilidades;
 ContextoJson contexto = new ContextoJson();
 contexto.Carregar();
 
-// RepositorioCategoriaEmMemoria repositorioCategoria = new RepositorioCategoriaEmMemoria();
-// RepositorioProdutoEmMemoria repositorioProduto = new RepositorioProdutoEmMemoria();
-// RepositorioListaComprasEmMemoria repositorioListaCompras = new RepositorioListaComprasEmMemoria();
-
-RepositorioCategoriaEmArquivo repositorioCategoria = new RepositorioCategoriaEmArquivo(contexto);
-RepositorioProdutoEmArquivo repositorioProduto = new RepositorioProdutoEmArquivo(contexto);
-RepositorioListaComprasEmArquivo repositorioListaCompras = new RepositorioListaComprasEmArquivo(contexto);
+IRepositorio<Categoria> repositorioCategoria = new RepositorioCategoriaEmArquivo(contexto);
+IRepositorio<Produto> repositorioProduto = new RepositorioProdutoEmArquivo(contexto);
+IRepositorio<ListaCompras> repositorioListaCompras = new RepositorioListaComprasEmArquivo(contexto);
 
 TelaPrincipal telaPrincipal = new TelaPrincipal(
     repositorioCategoria,

@@ -7,13 +7,13 @@ namespace ListaDeCompras.ConsoleApp.ModuloProduto;
 
 public class TelaProduto : TelaBase<Produto>, ITelaOpcoes, ITelaCrud
 {
-    private readonly RepositorioCategoriaEmArquivo repositorioCategoria;
-    private readonly RepositorioListaComprasEmArquivo repositorioListaCompras;
+    private readonly IRepositorio<Categoria> repositorioCategoria;
+    private readonly IRepositorio<ListaCompras> repositorioListaCompras;
 
     public TelaProduto(
-        RepositorioProdutoEmArquivo repositorioProduto,
-        RepositorioCategoriaEmArquivo repositorioCategoria,
-        RepositorioListaComprasEmArquivo repositorioListaCompras
+        IRepositorio<Produto> repositorioProduto,
+        IRepositorio<Categoria> repositorioCategoria,
+        IRepositorio<ListaCompras> repositorioListaCompras
     ) : base("Produto", repositorioProduto)
     {
         this.repositorioCategoria = repositorioCategoria;

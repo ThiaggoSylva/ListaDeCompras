@@ -45,6 +45,7 @@ public class ContextoJson
         string jsonString = File.ReadAllText(caminhoArquivo);
 
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
+        opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
 
         ContextoJson? contextoSalvo = JsonSerializer.Deserialize<ContextoJson>(jsonString, opcoesJson);
