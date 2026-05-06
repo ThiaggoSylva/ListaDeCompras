@@ -20,6 +20,7 @@ public class ContextoJson
 
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
         opcoesJson.WriteIndented = true;
+        opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
 
         string jsonString = JsonSerializer.Serialize(this, opcoesJson);
