@@ -37,31 +37,44 @@ public abstract class TelaBase<T> where T : EntidadeBase
     {
         ExibirCabecalho($"Cadastro de {nomeEntidade}");
 
-        T novaEntidade = ObterDadosCadastrais();
-
-        List<string> erros = novaEntidade.Validar();
-
-        if (erros.Count > 0)
+        try
         {
-            Notificador.ExibirMensagensErro(erros);
+            T novaEntidade = ObterDadosCadastrais();
 
-            Cadastrar();
-            return;
+            List<string> erros = novaEntidade.Validar();
+
+            if (erros.Count > 0)
+            {
+                Notificador.ExibirMensagensErro(erros);
+
+                Cadastrar();
+                return;
+            }
+
+            List<string> errosDuplicacao = ValidarRegistroDuplicado(novaEntidade);
+
+            if (errosDuplicacao.Count > 0)
+            {
+                Notificador.ExibirMensagensErro(errosDuplicacao);
+
+                Cadastrar();
+                return;
+            }
+
+            repositorio.Cadastrar(novaEntidade);
+
+            Notificador.ExibirMensagem($"O registro \"{novaEntidade.Id}\" foi cadastrado com sucesso!");
         }
-
-        List<string> errosDuplicacao = ValidarRegistroDuplicado(novaEntidade);
-
-        if (errosDuplicacao.Count > 0)
+        catch (FormatException)
         {
-            Notificador.ExibirMensagensErro(errosDuplicacao);
-
+            Notificador.ExibirMensagem("O formato do valor de um dos campos está inválido.");
             Cadastrar();
-            return;
         }
-
-        repositorio.Cadastrar(novaEntidade);
-
-        Notificador.ExibirMensagem($"O registro \"{novaEntidade.Id}\" foi cadastrado com sucesso!");
+        catch (Exception)
+        {
+            Notificador.ExibirMensagem("Ocorreu um erro inesperado. Tente novamente.");
+            Cadastrar();
+        }
     }
 
     public void Editar()
@@ -88,37 +101,50 @@ public abstract class TelaBase<T> where T : EntidadeBase
 
         Console.WriteLine("---------------------------------");
 
-        T novaEntidade = ObterDadosCadastrais();
-
-        List<string> erros = novaEntidade.Validar();
-
-        if (erros.Count > 0)
+        try
         {
-            Notificador.ExibirMensagensErro(erros);
+            T novaEntidade = ObterDadosCadastrais();
 
+            List<string> erros = novaEntidade.Validar();
+
+            if (erros.Count > 0)
+            {
+                Notificador.ExibirMensagensErro(erros);
+
+                Editar();
+                return;
+            }
+
+            List<string> errosDuplicacao = ValidarRegistroDuplicado(novaEntidade, idSelecionado);
+
+            if (errosDuplicacao.Count > 0)
+            {
+                Notificador.ExibirMensagensErro(errosDuplicacao);
+
+                Cadastrar();
+                return;
+            }
+
+            bool conseguiuEditar = repositorio.Editar(idSelecionado, novaEntidade);
+
+            if (!conseguiuEditar)
+            {
+                Notificador.ExibirMensagem("Não foi possível encontrar o registro requisitado.");
+                return;
+            }
+
+            Notificador.ExibirMensagem($"O registro \"{idSelecionado}\" foi editado com sucesso.");
+        }
+        catch (FormatException)
+        {
+            Notificador.ExibirMensagem("O formato do valor de um dos campos está inválido.");
             Editar();
-            return;
         }
-
-        List<string> errosDuplicacao = ValidarRegistroDuplicado(novaEntidade, idSelecionado);
-
-        if (errosDuplicacao.Count > 0)
+        catch (Exception)
         {
-            Notificador.ExibirMensagensErro(errosDuplicacao);
-
-            Cadastrar();
-            return;
+            Notificador.ExibirMensagem("Ocorreu um erro inesperado. Tente novamente.");
+            Editar();
         }
-
-        bool conseguiuEditar = repositorio.Editar(idSelecionado, novaEntidade);
-
-        if (!conseguiuEditar)
-        {
-            Notificador.ExibirMensagem("Não foi possível encontrar o registro requisitado.");
-            return;
-        }
-
-        Notificador.ExibirMensagem($"O registro \"{idSelecionado}\" foi editado com sucesso.");
     }
 
     public void Excluir()

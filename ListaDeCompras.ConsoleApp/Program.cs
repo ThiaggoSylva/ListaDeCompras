@@ -1,4 +1,5 @@
-﻿using ListaDeCompras.ConsoleApp.Compartilhado;
+﻿using System.Text.Json;
+using ListaDeCompras.ConsoleApp.Compartilhado;
 using ListaDeCompras.ConsoleApp.Compartilhado.Arquivos;
 using ListaDeCompras.ConsoleApp.ModuloCategoria;
 using ListaDeCompras.ConsoleApp.ModuloListaCompras;
@@ -6,7 +7,16 @@ using ListaDeCompras.ConsoleApp.ModuloProduto;
 using ListaDeCompras.ConsoleApp.Utilidades;
 
 ContextoJson contexto = new ContextoJson();
-contexto.Carregar();
+
+try
+{
+    contexto.Carregar();
+}
+catch (JsonException)
+{
+    Notificador.ExibirMensagem("O arquivo de armazenamento está corrompido. Contate a administração");
+    return;
+}
 
 IRepositorio<Categoria> repositorioCategoria = new RepositorioCategoriaEmArquivo(contexto);
 IRepositorio<Produto> repositorioProduto = new RepositorioProdutoEmArquivo(contexto);
